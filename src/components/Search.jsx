@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import InputControl from "./InputControl";
 import { searchMovies } from "../util";
+import { Column } from "./styled";
 
 const Search = ({ }) => {
     const SEARCH_DELAY = 1000;
@@ -28,7 +29,11 @@ const Search = ({ }) => {
             .then(setSearchResults)
     }
 
-    return adding ? <InputControl value={query} update={setQuery} />
+    return adding ?
+        <Column>
+            <InputControl value={query} update={setQuery} />
+            {searchResults.map(m => <p key={m.imdbID}>{m.Title} ({m.Year})</p>)}
+        </Column>
         : <button onClick={() => setAdding(true)}>add movies</button>;
 }
 

@@ -13,4 +13,13 @@ export const Main = styled.div`
     padding: 1em;
 `;
 
+export const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
+export const Row = styled.div`
+    display: flex;
+`
+
 export const Spacer = styled.div`flex:1`;
