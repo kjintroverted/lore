@@ -20,6 +20,11 @@ const Search = ({ }) => {
         setTimer(setTimeout(search, SEARCH_DELAY))
     }, [query])
 
+    const clear = () => {
+        setSearchResults([]);
+        setQuery("")
+    }
+
     const search = () => {
         setTimer(null)
         if (!query) {
@@ -33,7 +38,7 @@ const Search = ({ }) => {
 
     return adding ?
         <Container>
-            <InputControl value={query} update={setQuery} />
+            <InputControl value={query} update={setQuery} clear={clear} />
             {searchResults.map(m => <MovieResult key={m.imdbID} movie={m} />)}
         </Container>
         : <button onClick={() => setAdding(true)}>add movies</button>;

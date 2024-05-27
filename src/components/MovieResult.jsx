@@ -15,4 +15,9 @@ const Result = styled.div`
     display: flex;
     align-items: center;
     margin: .2em 0em;
+    background: black;
+    border-radius: 5px;
+    &:hover {
+        background: blue;
+    }
 `
