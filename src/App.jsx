@@ -5,7 +5,7 @@ import { loginToPod } from './pods'
 import Search from './components/Search'
 
 function App() {
-  const [session, setSession] = useState({})
+  const [session, setSession] = useState()
   const [username, setUsername] = useState()
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (session.info && session.info.isLoggedIn) {
+    if (session && session.info.isLoggedIn) {
       setUsername(session.info.webId.split("/").at(-1))
     }
   }, [session])
@@ -37,7 +37,9 @@ function App() {
         }
       </Header>
       <Main>
-        <Search />
+        {
+          session && <Search />
+        }
       </Main>
     </>
   )
