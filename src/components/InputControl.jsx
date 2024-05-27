@@ -1,16 +1,15 @@
 import styled from "styled-components";
-import { Row } from "./styled";
 
 const InputControl = ({ value, update }) => {
 
     return (
-        <Row>
-            <input value={value} onChange={e => update(e.target.value)} />
+        <Container>
+            <input style={{ width: '100%' }} value={value} onChange={e => update(e.target.value)} />
             {
                 value &&
                 <Clear onClick={() => update("")}>x</Clear>
             }
-        </Row>
+        </Container>
     )
 }
 
@@ -22,4 +21,9 @@ const Clear = styled.p`
     margin: 0px;
     cursor: pointer;
     z-index: 1;
+`
+
+const Container = styled.div`
+    display: flex;
+    width: 100%;
 `
