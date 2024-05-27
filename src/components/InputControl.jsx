@@ -16,7 +16,9 @@ const InputControl = ({ value, update }) => {
 export default InputControl;
 
 const Clear = styled.p`
-    margin: 0px -15px;
+    position: relative;
+    right: 15px;
+    margin: 0px;
     cursor: pointer;
     z-index: 1;
 `
