@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
 import { loginToPod } from './pods'
+import Search from './components/Search'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [session, setSession] = useState({})
   const [username, setUsername] = useState()
 
@@ -37,9 +37,7 @@ function App() {
         }
       </Header>
       <Main>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <Search />
       </Main>
     </>
   )
