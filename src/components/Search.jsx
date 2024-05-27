@@ -3,6 +3,7 @@ import InputControl from "./InputControl";
 import { searchMovies } from "../util";
 import { Column } from "./styled";
 import styled from "styled-components";
+import MovieResult from "./MovieResult";
 
 const Search = ({ }) => {
     const SEARCH_DELAY = 1000;
@@ -33,7 +34,7 @@ const Search = ({ }) => {
     return adding ?
         <Container>
             <InputControl value={query} update={setQuery} />
-            {searchResults.map(m => <p key={m.imdbID}>{m.Title} ({m.Year})</p>)}
+            {searchResults.map(m => <MovieResult key={m.imdbID} movie={m} />)}
         </Container>
         : <button onClick={() => setAdding(true)}>add movies</button>;
 }
