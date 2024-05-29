@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
-import { loginToPod } from './pods'
+import { getProfile, getSavedMovies, loginToPod } from './pods'
 import Search from './components/Search'
 
 function App() {
-  const [session, setSession] = useState()
-  const [username, setUsername] = useState()
+  const [session, setSession] = useState();
+  const [profile, setProfile] = useState();
+  const [movieDataset, setMovieDataset] = useState();
 
+  // Start login process
+  // Handle login redirect
   useEffect(() => {
     handleIncomingRedirect()
       .then(() => {
@@ -17,13 +20,20 @@ function App() {
           setSession(s)
         }
       })
-  }, [])
+  }, []);
 
+  // Get user info
   useEffect(() => {
     if (session && session.info.isLoggedIn) {
-      setUsername(session.info.webId.split("/").at(-1))
+      getProfile(session).then(setProfile);
     }
-  }, [session])
+  }, [session]);
+
+  // Get App data
+  useEffect(() => {
+    if (!profile || !profile.storageURL) return
+    getSavedMovies(session, profile.storageURL).then(setMovieDataset);
+  }, [profile]);
 
   return (
     <>
@@ -31,8 +41,8 @@ function App() {
         Movies
         <Spacer />
         {
-          username ?
-            <p>{username}</p>
+          profile ?
+            <p>{profile.username}</p>
             : <button onClick={loginToPod}>login</button>
         }
       </Header>
