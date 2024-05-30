@@ -53,3 +53,13 @@ export async function getDataSet(session, url) {
 export async function saveThing(dataset, data, shape) {
     console.log("Saving:", data);
 }
+
+export function getAndParse(thing, url) {
+    let rawData = getStringNoLocale(thing, url);
+    return JSON.parse(rawData);
+}
+
+export function stringifyAndSet(thing, url, data) {
+    let value = JSON.stringify(data);
+    return setStringNoLocale(thing, url, value);
+}
