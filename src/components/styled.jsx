@@ -22,4 +22,9 @@ export const Row = styled.div`
     display: flex;
 `
 
+export const IconButton = styled.button`
+    border-radius: 50%;
+    padding: 6px 11px;
+`
+
 export const Spacer = styled.div`flex:1`;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Column } from "./styled";
+import { Column, IconButton } from "./styled";
 
 const MovieResult = ({ movie, select }) => {
     return (
@@ -7,7 +7,7 @@ const MovieResult = ({ movie, select }) => {
             <img src={movie.Poster} width="50px" />
             <p style={{ margin: "0px 5px", flex: 1 }}><b>{movie.Title}</b> ({movie.Year})</p>
             <Column>
-                <button onClick={() => select({ id: movie.imdbID })}>+</button>
+                <IconButton onClick={() => select({ id: movie.imdbID })}>+</IconButton>
                 {/* <button>bookmark</button> */}
             </Column>
         </Result>
@@ -22,6 +22,7 @@ const Result = styled.div`
     margin: .2em 0em;
     background: black;
     border-radius: 5px;
+    padding-right: 5px;
     &:hover {
         background: blue;
     }
