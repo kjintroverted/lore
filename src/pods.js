@@ -27,7 +27,7 @@ export async function getProfile(session) {
     return profile;
 }
 
-export async function getSavedMovies(session, storageURL) {
+export async function getDataSet(session, storageURL) {
     let movieSolidDataset;
     const resourceURL = `${storageURL}/lore/movies`;
     try {
@@ -36,7 +36,6 @@ export async function getSavedMovies(session, storageURL) {
             resourceURL,
             { fetch: session.fetch }
         );
-        debugger
     } catch (e) {
         if (e.response.status === 404) { // Dataset doesn't exist
             // create movie DataSet
@@ -50,4 +49,8 @@ export async function getSavedMovies(session, storageURL) {
         }
     }
     return movieSolidDataset;
+}
+
+export async function saveThing(dataset, data, shape) {
+    console.log("Saving:", data);
 }

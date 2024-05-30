@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
-import { getProfile, getSavedMovies, loginToPod } from './pods'
+import { getDataSet, getProfile, loginToPod, saveThing } from './pods'
 import Search from './components/Search'
 
 function App() {
@@ -32,8 +32,12 @@ function App() {
   // Get App data
   useEffect(() => {
     if (!profile || !profile.storageURL) return
-    getSavedMovies(session, profile.storageURL).then(setMovieDataset);
+    getDataSet(session, profile.storageURL).then(setMovieDataset);
   }, [profile]);
+
+  function saveMovie(movie) {
+    saveThing(movieDataset, movie)
+  }
 
   return (
     <>
@@ -48,7 +52,7 @@ function App() {
       </Header>
       <Main>
         {
-          session && <Search />
+          session && <Search select={saveMovie} />
         }
       </Main>
     </>
