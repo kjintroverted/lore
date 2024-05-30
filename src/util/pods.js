@@ -27,22 +27,21 @@ export async function getProfile(session) {
     return profile;
 }
 
-export async function getDataSet(session, storageURL) {
+export async function getDataSet(session, url) {
     let movieSolidDataset;
-    const resourceURL = `${storageURL}/lore/movies`;
     try {
         // Get the SolidDataset for Writing 101 at the specified URL
         movieSolidDataset = await getSolidDataset(
-            resourceURL,
+            url,
             { fetch: session.fetch }
         );
     } catch (e) {
         if (e.response.status === 404) { // Dataset doesn't exist
             // create movie DataSet
-            console.info(`No movie data found. Creating a new data set at ${resourceURL}`)
+            console.info(`No movie data found. Creating a new data set at ${url}`)
             movieSolidDataset = createSolidDataset();
             movieSolidDataset = await saveSolidDatasetAt(
-                resourceURL,
+                url,
                 movieSolidDataset,
                 { fetch: session.fetch }
             );

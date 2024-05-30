@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import InputControl from "./InputControl";
-import { searchMovies } from "../util";
+import { searchMovies } from "../util/util";
 import styled from "styled-components";
 import MovieResult from "./MovieResult";
 
