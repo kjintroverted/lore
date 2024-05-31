@@ -27,7 +27,7 @@ export async function getProfile(session) {
     return profile;
 }
 
-export async function getDataSet(session, url) {
+export async function getDataSet(fetch, url) {
     let dataset;
     try {
         // Get the SolidDataset for Writing 101 at the specified URL

@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
-import { getDataSet, getProfile, initThing, loadDataset, loginToPod, saveThing } from './util/pods'
-import Search from './components/Search'
-import { movieShape } from './util/shapes'
-import { getAllMovies } from './util/util'
+import { getProfile, loginToPod } from './util/pods'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [session, setSession] = useState();
   const [profile, setProfile] = useState();
-  const [movieDataset, setMovieDataset] = useState();
-  const [movies, setMovies] = useState([]);
 
   // Start login process
   // Handle login redirect
@@ -28,35 +24,10 @@ function App() {
   // Get user info
   useEffect(() => {
     if (session && session.info.isLoggedIn) {
-      getProfile(session).then(setProfile);
+      getProfile(session)
+        .then(setProfile);
     }
   }, [session]);
-
-  // Get App data
-  useEffect(() => {
-    if (!profile || !profile.storageURL) return
-    getDataSet(session, `${profile.storageURL}/lore/movies`).then(setMovieDataset);
-  }, [profile]);
-
-  // Load saved movies
-  useEffect(() => {
-    if (!movieDataset) return
-    loadDataset(movieDataset, { shape: movieShape })
-      .then(getAllMovies)
-      .then(setMovies)
-  }, [movieDataset])
-
-  async function saveMovie(movie) {
-    let { dataset } = await initThing(
-      movie,
-      movieShape,
-      {
-        id: movie.id,
-        dataset: movieDataset,
-        fetch: session.fetch
-      });
-    setMovieDataset(dataset);
-  }
 
   return (
     <>
@@ -71,7 +42,12 @@ function App() {
       </Header>
       <Main>
         {
-          session && <Search select={saveMovie} />
+          profile && <Dashboard
+            appData={{
+              fetch: session.fetch,
+              storageURL: profile.storageURL
+            }}
+          />
         }
       </Main>
     </>
