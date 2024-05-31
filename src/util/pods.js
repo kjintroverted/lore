@@ -33,10 +33,11 @@ export async function getDataSet(fetch, url) {
         // Get the SolidDataset for Writing 101 at the specified URL
         dataset = await getSolidDataset(
             url,
-            { fetch: session.fetch }
+            { fetch }
         );
     } catch (e) {
-        if (e.response.status === 404) { // Dataset doesn't exist
+        debugger
+        if (e.response && e.response.status === 404) { // Dataset doesn't exist
             // create movie DataSet
             console.info(`No movie data found. Creating a new data set at ${url}`)
             dataset = createSolidDataset();

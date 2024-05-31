@@ -1,7 +1,10 @@
-import { getDataSet, loadDataset } from '../util/pods';
+import { getDataSet, initThing, loadDataset } from '../util/pods';
 import Search from './Search';
 import { movieShape } from './../util/shapes'
 import { useEffect, useState } from 'react';
+import MovieTable from './MovieTable';
+import { getAllMovies } from '../util/util';
+import { Column } from './styled';
 
 const Dashboard = ({ appData }) => {
 
@@ -30,13 +33,16 @@ const Dashboard = ({ appData }) => {
             {
                 id: movie.id,
                 dataset: movieDataset,
-                fetch: session.fetch
+                fetch: appData.fetch
             });
         setMovieDataset(dataset);
     }
 
     return (
-        <Search select={saveMovie} />
+        <Column>
+            <Search select={saveMovie} />
+            <MovieTable movies={movies} />
+        </Column>
     )
 }
 
