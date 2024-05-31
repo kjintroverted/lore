@@ -113,3 +113,11 @@ export async function getMovieData(id) {
     }
     return data;
 }
+
+export async function getAllMovies(movies) {
+    let results = movies.map(async m => {
+        let info = await getMovieData(m.id)
+        return { ...m, info }
+    })
+    return Promise.all(results)
+}

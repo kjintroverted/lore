@@ -4,6 +4,7 @@ import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-
 import { getDataSet, getProfile, initThing, loadDataset, loginToPod, saveThing } from './util/pods'
 import Search from './components/Search'
 import { movieShape } from './util/shapes'
+import { getAllMovies } from './util/util'
 
 function App() {
   const [session, setSession] = useState();
@@ -39,7 +40,9 @@ function App() {
   // Load saved movies
   useEffect(() => {
     if (!movieDataset) return
-    loadDataset(movieDataset, { shape: movieShape }).then(console.log)
+    loadDataset(movieDataset, { shape: movieShape })
+      .then(getAllMovies)
+      .then(console.log)
   }, [movieDataset])
 
   async function saveMovie(movie) {
