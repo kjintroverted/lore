@@ -10,6 +10,7 @@ function App() {
   const [session, setSession] = useState();
   const [profile, setProfile] = useState();
   const [movieDataset, setMovieDataset] = useState();
+  const [movies, setMovies] = useState([]);
 
   // Start login process
   // Handle login redirect
@@ -42,7 +43,7 @@ function App() {
     if (!movieDataset) return
     loadDataset(movieDataset, { shape: movieShape })
       .then(getAllMovies)
-      .then(console.log)
+      .then(setMovies)
   }, [movieDataset])
 
   async function saveMovie(movie) {
