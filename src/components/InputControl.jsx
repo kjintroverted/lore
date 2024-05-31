@@ -4,7 +4,12 @@ const InputControl = ({ value, update, clear }) => {
 
     return (
         <Container>
-            <input style={{ width: '100%' }} value={value} onChange={e => update(e.target.value)} />
+            <input
+                placeholder="search new movies..."
+                style={{ width: '100%' }}
+                value={value}
+                onChange={e => update(e.target.value)}
+            />
             {
                 value &&
                 <Clear onClick={clear}>x</Clear>
