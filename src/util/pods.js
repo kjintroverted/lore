@@ -1,4 +1,4 @@
-import { createSolidDataset, getPodUrlAllFrom, getSolidDataset, getStringNoLocale, getThing, getUrl, saveSolidDatasetAt } from "@inrupt/solid-client";
+import { createSolidDataset, createThing, getPodUrlAllFrom, getSolidDataset, getStringNoLocale, getThing, getThingAll, getUrl, saveSolidDatasetAt, setThing } from "@inrupt/solid-client";
 import { login } from "@inrupt/solid-client-authn-browser";
 
 export function loginToPod() {
@@ -22,16 +22,16 @@ export async function getProfile(session) {
             storageURL: podRoot[0]
         }
     } catch (e) {
-        debugger
+        console.error(e);
     }
     return profile;
 }
 
 export async function getDataSet(session, url) {
-    let movieSolidDataset;
+    let dataset;
     try {
         // Get the SolidDataset for Writing 101 at the specified URL
-        movieSolidDataset = await getSolidDataset(
+        dataset = await getSolidDataset(
             url,
             { fetch: session.fetch }
         );
@@ -39,19 +39,79 @@ export async function getDataSet(session, url) {
         if (e.response.status === 404) { // Dataset doesn't exist
             // create movie DataSet
             console.info(`No movie data found. Creating a new data set at ${url}`)
-            movieSolidDataset = createSolidDataset();
-            movieSolidDataset = await saveSolidDatasetAt(
+            dataset = createSolidDataset();
+            dataset = await saveSolidDatasetAt(
                 url,
-                movieSolidDataset,
+                dataset,
                 { fetch: session.fetch }
             );
         }
     }
-    return movieSolidDataset;
+    return dataset;
 }
 
-export async function saveThing(dataset, data, shape) {
-    console.log("Saving:", data);
+export function loadFromDataset(dataset, url, struct) {
+    const thing = getThing(dataset, url)
+    if (!thing) {
+        console.error(`Cannot find ${url} in dataset.`, dataset);
+        return { thing }
+    }
+    let datum = {};
+    for (let field in struct) {
+        let attribute = struct[field]
+        datum[field] = attribute.parse(thing, attribute.predicate)
+    }
+    return { ...datum, thing, struct };
+}
+
+// opt needed: id, dataset, fetch
+export async function initThing(data, struct, options) {
+    let thing = createThing({ id: options.id })
+    thing = setAllAttr(thing, { ...data, struct });
+    let { dataset: updatedDataset, thing: updatedThing } = await saveThing(thing, options.dataset, options);
+    return { dataset: updatedDataset, thing: updatedThing };
+}
+
+export function setAllAttr(thing, data) {
+    const { struct } = data;
+    for (let attr in data) {
+        if (!struct[attr]) {
+            console.info(`Skipping assignment. No struct attribute found for ${attr}.`);
+            continue;
+        }
+        thing = struct[attr].set(
+            thing,
+            struct[attr].predicate,
+            data[attr]);
+    }
+    return thing;
+}
+
+// opts needed: fetch
+export async function saveThing(thing, dataset, options = {}) {
+    console.log("options", options);
+    dataset = setThing(dataset, thing);
+    dataset = await saveSolidDatasetAt(
+        dataset.internal_resourceInfo.sourceIri,
+        dataset,
+        { fetch: options.fetch }
+    )
+    // thing = await loadFromDataset(dataset, url, struct);
+    return { dataset, thing };
+}
+
+export async function loadDataset(dataset, options) {
+    let things = getThingAll(dataset);
+    return things.map(t => getObjectFromThing(t, options.shape))
+}
+
+export function getObjectFromThing(thing, shape) {
+    let datum = {};
+    for (let field in shape) {
+        let attribute = shape[field]
+        datum[field] = attribute.parse(thing, attribute.predicate)
+    }
+    return { ...datum, thing, shape };
 }
 
 export function getAndParse(thing, url) {

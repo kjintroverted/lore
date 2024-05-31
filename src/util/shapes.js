@@ -1,5 +1,6 @@
 import { FOAF, VCARD } from "@inrupt/vocab-common-rdf";
 import { getAndParse, stringifyAndSet } from "./pods";
+import { getStringNoLocale, setStringNoLocale } from "@inrupt/solid-client";
 
 export const movieShape = {
     id: {

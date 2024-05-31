@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
-import { getDataSet, getProfile, loginToPod, saveThing } from './util/pods'
+import { getDataSet, getProfile, initThing, loadDataset, loginToPod, saveThing } from './util/pods'
 import Search from './components/Search'
+import { movieShape } from './util/shapes'
 
 function App() {
   const [session, setSession] = useState();
@@ -35,8 +36,22 @@ function App() {
     getDataSet(session, `${profile.storageURL}/lore/movies`).then(setMovieDataset);
   }, [profile]);
 
-  function saveMovie(movie) {
-    saveThing(movieDataset, movie)
+  // Load saved movies
+  useEffect(() => {
+    if (!movieDataset) return
+    loadDataset(movieDataset, { shape: movieShape }).then(console.log)
+  }, [movieDataset])
+
+  async function saveMovie(movie) {
+    let { dataset } = await initThing(
+      movie,
+      movieShape,
+      {
+        id: movie.id,
+        dataset: movieDataset,
+        fetch: session.fetch
+      });
+    setMovieDataset(dataset);
   }
 
   return (
