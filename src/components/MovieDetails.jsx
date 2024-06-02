@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MovieDetails = ({ movie }) => {
+const MovieDetails = ({ movie, rank }) => {
 
     // Ratings
     // 0: {Source: 'Internet Movie Database', Value: '7.8/10'}
@@ -9,7 +9,9 @@ const MovieDetails = ({ movie }) => {
 
     return (
         <TabelRow>
-            <SingleCol />
+            <SingleCol>
+                {rank}
+            </SingleCol>
             <BigText style={{ flex: 1 }}>{movie.Title} ({movie.Year})</BigText>
             <DoubleCol>
                 <BigText className="glow">9.0</BigText>

@@ -52,7 +52,7 @@ const MovieTable = ({ movies }) => {
                 </SingleCol>
             </TabelRow>
             {
-                sortedMovies.map(m => <MovieDetails key={m.id} movie={m.info} />)
+                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m.info} rank={++i} />)
             }
         </Table>
     )
