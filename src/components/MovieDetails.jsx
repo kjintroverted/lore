@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { overallScore } from "../util/util";
+import { Column, Row } from "./styled";
+import { useState } from "react";
 
 const MovieDetails = ({ movie, rank }) => {
 
@@ -8,22 +10,32 @@ const MovieDetails = ({ movie, rank }) => {
     // 1: {Source: 'Rotten Tomatoes', Value: '75%'}
     // 2: {Source: 'Metacritic', Value: '51/100'}
 
+    const [open, setOpen] = useState(false);
+
     return (
-        <TabelRow>
-            <SingleCol>
-                {rank}
-            </SingleCol>
-            <BigText style={{ flex: 1 }}>{movie.Title} ({movie.Year})</BigText>
-            <DoubleCol>
-                <BigText className="glow">{overallScore(movie.rating) || "-"}</BigText>
-            </DoubleCol>
-            <SingleCol>
-                <LittleText>{movie.Ratings[0].Value}</LittleText>
-            </SingleCol>
-            <SingleCol>
-                <LittleText>{movie.Ratings[1].Value}</LittleText>
-            </SingleCol>
-        </TabelRow>
+        <Column>
+            <TabelRow onClick={() => setOpen(!open)}>
+                <SingleCol>
+                    {rank}
+                </SingleCol>
+                <BigText style={{ flex: 1 }}>{movie.info.Title} ({movie.info.Year})</BigText>
+                <DoubleCol>
+                    <BigText className="glow">{overallScore(movie.rating) || "-"}</BigText>
+                </DoubleCol>
+                <SingleCol>
+                    <LittleText>{movie.info.Ratings[0].Value}</LittleText>
+                </SingleCol>
+                <SingleCol>
+                    <LittleText>{movie.info.Ratings[1].Value}</LittleText>
+                </SingleCol>
+            </TabelRow>
+            {
+                movie.info &&
+                <Details className={open ? "open" : ""}>
+                    <img src={movie.info.Poster} width={100} />
+                </Details>
+            }
+        </Column>
     )
 }
 
@@ -33,6 +45,7 @@ const TabelRow = styled.div`
     display: flex;
     border-bottom: gray solid;
     padding: 0em .3em;
+    cursor: pointer;
     > * {
         border-left: gray solid;
         padding: .2em;
@@ -61,4 +74,16 @@ const BigText = styled.h3`
 
 const LittleText = styled.p`
     margin: .1em;
+`
+
+const Details = styled.div`
+    display: flex;
+    align-items: center;
+    transition: height .3s ease-in-out;
+    height: 0px;
+    overflow: hidden;
+    &.open{
+        border-bottom: gray solid;
+        height: 200px;
+    }
 `

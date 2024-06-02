@@ -40,7 +40,7 @@ const MovieTable = ({ movies, saveMovie }) => {
                 </SingleCol>
             </TabelRow>
             {
-                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m.info} rank={++i} />)
+                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m} rank={++i} />)
             }
         </Table>
     )

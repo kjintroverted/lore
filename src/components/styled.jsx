@@ -20,6 +20,9 @@ export const Column = styled.div`
 
 export const Row = styled.div`
     display: flex;
+    &.align-center {
+        align-items: center;
+    }
 `
 
 export const IconButton = styled.button`
