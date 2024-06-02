@@ -26,21 +26,8 @@ const Dashboard = ({ appData }) => {
             .then(setMovies)
     }, [movieDataset])
 
-    async function saveMovie(movie) {
-        let { dataset } = await initThing(
-            movie,
-            movieShape,
-            {
-                id: movie.id,
-                dataset: movieDataset,
-                fetch: appData.fetch
-            });
-        setMovieDataset(dataset);
-    }
-
     return (
         <Column>
-            <Search select={saveMovie} />
             <MovieTable movies={movies} />
         </Column>
     )

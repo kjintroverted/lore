@@ -5,8 +5,8 @@ const InputControl = ({ value, update, clear }) => {
     return (
         <Container>
             <input
-                placeholder="search new movies..."
-                style={{ width: '100%' }}
+                placeholder="search titles..."
+                style={{ width: '100%', padding: '0.6em', fontSize: '1em' }}
                 value={value}
                 onChange={e => update(e.target.value)}
             />
