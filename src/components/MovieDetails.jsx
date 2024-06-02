@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Spacer } from "./styled";
 
 const MovieDetails = ({ movie }) => {
 
@@ -10,9 +9,17 @@ const MovieDetails = ({ movie }) => {
 
     return (
         <TabelRow>
-            <BigText>{movie.Title} ({movie.Year})</BigText>
-            <Spacer />
-            <LittleText>{movie.Ratings[0].Value}</LittleText>
+            <SingleCol />
+            <BigText style={{ flex: 1 }}>{movie.Title} ({movie.Year})</BigText>
+            <DoubleCol>
+                <BigText className="glow">9.0</BigText>
+            </DoubleCol>
+            <SingleCol>
+                <LittleText>{movie.Ratings[0].Value}</LittleText>
+            </SingleCol>
+            <SingleCol>
+                <LittleText>{movie.Ratings[1].Value}</LittleText>
+            </SingleCol>
         </TabelRow>
     )
 }
@@ -22,11 +29,31 @@ export default MovieDetails;
 const TabelRow = styled.div`
     display: flex;
     border-bottom: gray solid;
-    padding: .3em;
+    padding: 0em .3em;
+    > * {
+        border-left: gray solid;
+        padding: .2em;
+        &:nth-child(1) {
+            border: none;
+        }
+    }
+`
+
+const SingleCol = styled.div`
+    width: 3.5em;
+    text-align: center;
+`
+
+const DoubleCol = styled.div`
+    width: 5em;
+    text-align: center;
 `
 
 const BigText = styled.h3`
-    margin: .1em;
+    margin: 0em;
+    &.glow {
+        text-shadow: white 0px 0px 10px;
+    }
 `
 
 const LittleText = styled.p`
