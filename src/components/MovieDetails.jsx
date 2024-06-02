@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { overallScore } from "../util/util";
 
 const MovieDetails = ({ movie, rank }) => {
 
@@ -14,7 +15,7 @@ const MovieDetails = ({ movie, rank }) => {
             </SingleCol>
             <BigText style={{ flex: 1 }}>{movie.Title} ({movie.Year})</BigText>
             <DoubleCol>
-                <BigText className="glow">9.0</BigText>
+                <BigText className="glow">{overallScore(movie.rating) || "-"}</BigText>
             </DoubleCol>
             <SingleCol>
                 <LittleText>{movie.Ratings[0].Value}</LittleText>

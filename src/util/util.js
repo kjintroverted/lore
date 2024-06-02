@@ -1,4 +1,5 @@
 const KEY = "9c3bca4";
+const DECIMAL = 2;
 
 export function overallScore(rating, sigDigits = DECIMAL) {
     if (!rating
