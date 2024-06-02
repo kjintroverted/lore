@@ -1,5 +1,4 @@
 import { getDataSet, initThing, loadDataset } from '../util/pods';
-import Search from './Search';
 import { movieShape } from './../util/shapes'
 import { useEffect, useState } from 'react';
 import MovieTable from './MovieTable';
@@ -26,9 +25,21 @@ const Dashboard = ({ appData }) => {
             .then(setMovies)
     }, [movieDataset])
 
+    async function saveMovie(movie) {
+        let { dataset } = await initThing(
+            movie,
+            movieShape,
+            {
+                id: movie.id,
+                dataset: movieDataset,
+                fetch: appData.fetch
+            });
+        setMovieDataset(dataset);
+    }
+
     return (
         <Column>
-            <MovieTable movies={movies} />
+            <MovieTable movies={movies} saveMovie={saveMovie} />
         </Column>
     )
 }

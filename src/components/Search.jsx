@@ -38,7 +38,9 @@ const Search = ({ select }) => {
     return adding ?
         <Container>
             <InputControl value={query} update={setQuery} clear={clear} />
-            {searchResults.map(m => <MovieResult select={select} key={m.imdbID} movie={m} />)}
+            <ResultsContainer>
+                {searchResults.map(m => <MovieResult select={select} key={m.imdbID} movie={m} />)}
+            </ResultsContainer>
         </Container>
         : <button onClick={() => setAdding(true)}>add movies</button>;
 }
@@ -49,4 +51,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 300px;
+`
+const ResultsContainer = styled.div`
+    position: absolute;
+    top: 136px;
 `

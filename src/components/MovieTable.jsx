@@ -4,7 +4,7 @@ import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 
-const MovieTable = ({ movies }) => {
+const MovieTable = ({ movies, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
 
@@ -19,18 +19,6 @@ const MovieTable = ({ movies }) => {
             return imdbB - imdbA;
         }));
     }, [movies]);
-
-    async function saveMovie(movie) {
-        let { dataset } = await initThing(
-            movie,
-            movieShape,
-            {
-                id: movie.id,
-                dataset: movieDataset,
-                fetch: appData.fetch
-            });
-        setMovieDataset(dataset);
-    }
 
     return (
         <Table>
