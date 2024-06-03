@@ -34,8 +34,11 @@ const MovieDetails = ({ movie, rank, updateRating }) => {
                 movie.info &&
                 <Details className={open ? "open" : ""}>
                     <Column style={{ width: 540 }}>
-                        <Row>
-                            <img src={movie.info.Poster} width={180} />
+                        <Row style={{ alignItems: 'center' }}>
+                            {
+                                window.innerWidth > 700 &&
+                                <img src={movie.info.Poster} height={300} />
+                            }
                             <Column>
                                 <RateSlider
                                     movie={movie}
@@ -107,11 +110,11 @@ const Details = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: height .3s ease-in-out;
-    height: 0px;
+    transition: max-height .5s ease-in-out;
+    max-height: 0px;
     overflow: hidden;
     &.open{
         border-bottom: gray solid;
-        height: 300px;
+        max-height: 500px;
     }
 `
