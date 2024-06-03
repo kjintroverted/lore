@@ -3,7 +3,7 @@ import { overallScore } from "../util/util";
 import { Column, Row } from "./styled";
 import { useState } from "react";
 
-const MovieDetails = ({ movie, rank }) => {
+const MovieDetails = ({ movie, rank, updateRating }) => {
 
     // Ratings
     // 0: {Source: 'Internet Movie Database', Value: '7.8/10'}
@@ -32,7 +32,63 @@ const MovieDetails = ({ movie, rank }) => {
             {
                 movie.info &&
                 <Details className={open ? "open" : ""}>
-                    <img src={movie.info.Poster} width={100} />
+                    <Column style={{ width: 540 }}>
+                        <Row>
+                            <img src={movie.info.Poster} width={100} />
+                            <Column>
+                                <Row>
+                                    <input
+                                        onChange={e => updateRating('story')(e.target.value)}
+                                        type="range"
+                                        min="1" max="10" />
+                                    <BigText>
+                                        {movie.rating && movie.rating.story ?
+                                            movie.rating.story : "-"}
+                                    </BigText>
+                                </Row>
+                                <Row>
+                                    <input
+                                        onChange={e => updateRating('character')(e.target.value)}
+                                        type="range"
+                                        min="1" max="10" />
+                                    <BigText>
+                                        {movie.rating && movie.rating.character ?
+                                            movie.rating.character : "-"}
+                                    </BigText>
+                                </Row>
+                                <Row>
+                                    <input
+                                        onChange={e => updateRating('performance')(e.target.value)}
+                                        type="range"
+                                        min="1" max="10" />
+                                    <BigText>
+                                        {movie.rating && movie.rating.performance ?
+                                            movie.rating.performance : "-"}
+                                    </BigText>
+                                </Row>
+                                <Row>
+                                    <input
+                                        onChange={e => updateRating('visuals')(e.target.value)}
+                                        type="range"
+                                        min="1" max="10" />
+                                    <BigText>
+                                        {movie.rating && movie.rating.visuals ?
+                                            movie.rating.visuals : "-"}
+                                    </BigText>
+                                </Row>
+                                <Row>
+                                    <input
+                                        onChange={e => updateRating('soundtrack')(e.target.value)}
+                                        type="range"
+                                        min="1" max="10" />
+                                    <BigText>
+                                        {movie.rating && movie.rating.soundtrack ?
+                                            movie.rating.soundtrack : "-"}
+                                    </BigText>
+                                </Row>
+                            </Column>
+                        </Row>
+                    </Column>
                 </Details>
             }
         </Column>
@@ -79,6 +135,7 @@ const LittleText = styled.p`
 const Details = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     transition: height .3s ease-in-out;
     height: 0px;
     overflow: hidden;

@@ -20,6 +20,22 @@ const MovieTable = ({ movies, saveMovie }) => {
         }));
     }, [movies]);
 
+    function updateRating(i) {
+        return (category) => {
+            return (value) => {
+                let updated = movies[i]
+                if (!updated.rating) updated.rating = {}
+                updated.rating[category] = +value;
+                setSortedMovies(
+                    [...sortedMovies.slice(0, i),
+                        updated,
+                    ...sortedMovies.slice(i + 1)
+                    ]
+                )
+            }
+        }
+    }
+
     return (
         <Table>
             <Header>
@@ -40,7 +56,7 @@ const MovieTable = ({ movies, saveMovie }) => {
                 </SingleCol>
             </TabelRow>
             {
-                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m} rank={++i} />)
+                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m} rank={i + 1} updateRating={updateRating(i)} />)
             }
         </Table>
     )
@@ -52,7 +68,7 @@ const Table = styled.div`
     display: flex;
     flex-direction: column;
     width: 90vw;
-    max-wdith: 540px;
+    max-width: 1080px;
 `
 const Header = styled.div`
     display: flex;
