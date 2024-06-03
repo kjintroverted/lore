@@ -4,7 +4,7 @@ import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 
-const MovieTable = ({ movies, saveMovie }) => {
+const MovieTable = ({ movies, addMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
 
@@ -40,7 +40,7 @@ const MovieTable = ({ movies, saveMovie }) => {
         <Table>
             <Header>
                 <Spacer />
-                <Search select={saveMovie} />
+                <Search select={addMovie} />
             </Header>
             <TabelRow>
                 <SingleCol />

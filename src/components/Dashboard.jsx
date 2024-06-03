@@ -25,7 +25,7 @@ const Dashboard = ({ appData }) => {
             .then(setMovies)
     }, [movieDataset])
 
-    async function saveMovie(movie) {
+    async function addMovie(movie) {
         let { dataset } = await initThing(
             movie,
             movieShape,
@@ -39,7 +39,7 @@ const Dashboard = ({ appData }) => {
 
     return (
         <Column>
-            <MovieTable movies={movies} saveMovie={saveMovie} />
+            <MovieTable movies={movies} addMovie={addMovie} />
         </Column>
     )
 }
