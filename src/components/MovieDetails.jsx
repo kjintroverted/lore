@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { overallScore } from "../util/util";
+import { RATINGS, overallScore } from "../util/util";
 import { Column, Row } from "./styled";
 import { useState } from "react";
+import RateSlider from "./RateSlider";
 
 const MovieDetails = ({ movie, rank, updateRating }) => {
 
@@ -34,58 +35,28 @@ const MovieDetails = ({ movie, rank, updateRating }) => {
                 <Details className={open ? "open" : ""}>
                     <Column style={{ width: 540 }}>
                         <Row>
-                            <img src={movie.info.Poster} width={100} />
+                            <img src={movie.info.Poster} width={180} />
                             <Column>
-                                <Row>
-                                    <input
-                                        onChange={e => updateRating('story')(e.target.value)}
-                                        type="range"
-                                        min="1" max="10" />
-                                    <BigText>
-                                        {movie.rating && movie.rating.story ?
-                                            movie.rating.story : "-"}
-                                    </BigText>
-                                </Row>
-                                <Row>
-                                    <input
-                                        onChange={e => updateRating('character')(e.target.value)}
-                                        type="range"
-                                        min="1" max="10" />
-                                    <BigText>
-                                        {movie.rating && movie.rating.character ?
-                                            movie.rating.character : "-"}
-                                    </BigText>
-                                </Row>
-                                <Row>
-                                    <input
-                                        onChange={e => updateRating('performance')(e.target.value)}
-                                        type="range"
-                                        min="1" max="10" />
-                                    <BigText>
-                                        {movie.rating && movie.rating.performance ?
-                                            movie.rating.performance : "-"}
-                                    </BigText>
-                                </Row>
-                                <Row>
-                                    <input
-                                        onChange={e => updateRating('visuals')(e.target.value)}
-                                        type="range"
-                                        min="1" max="10" />
-                                    <BigText>
-                                        {movie.rating && movie.rating.visuals ?
-                                            movie.rating.visuals : "-"}
-                                    </BigText>
-                                </Row>
-                                <Row>
-                                    <input
-                                        onChange={e => updateRating('soundtrack')(e.target.value)}
-                                        type="range"
-                                        min="1" max="10" />
-                                    <BigText>
-                                        {movie.rating && movie.rating.soundtrack ?
-                                            movie.rating.soundtrack : "-"}
-                                    </BigText>
-                                </Row>
+                                <RateSlider
+                                    movie={movie}
+                                    updateRating={updateRating('story')}
+                                    category={'story'} />
+                                <RateSlider
+                                    movie={movie}
+                                    updateRating={updateRating('character')}
+                                    category={'character'} />
+                                <RateSlider
+                                    movie={movie}
+                                    updateRating={updateRating('performance')}
+                                    category={'performance'} />
+                                <RateSlider
+                                    movie={movie}
+                                    updateRating={updateRating('visuals')}
+                                    category={'visuals'} />
+                                <RateSlider
+                                    movie={movie}
+                                    updateRating={updateRating('soundtrack')}
+                                    category={'soundtrack'} />
                             </Column>
                         </Row>
                     </Column>
@@ -141,6 +112,6 @@ const Details = styled.div`
     overflow: hidden;
     &.open{
         border-bottom: gray solid;
-        height: 200px;
+        height: 300px;
     }
 `
