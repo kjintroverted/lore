@@ -4,7 +4,7 @@ import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 
-const MovieTable = ({ movies, addMovie }) => {
+const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
 
@@ -56,7 +56,12 @@ const MovieTable = ({ movies, addMovie }) => {
                 </SingleCol>
             </TabelRow>
             {
-                sortedMovies.map((m, i) => <MovieDetails key={m.id} movie={m} rank={i + 1} updateRating={updateRating(i)} />)
+                sortedMovies.map((m, i) => <MovieDetails
+                    key={m.id}
+                    movie={m}
+                    rank={i + 1}
+                    updateRating={updateRating(i)}
+                    saveMovie={saveMovie} />)
             }
         </Table>
     )

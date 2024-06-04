@@ -1,4 +1,4 @@
-import { createSolidDataset, createThing, getPodUrlAllFrom, getSolidDataset, getStringNoLocale, getThing, getThingAll, getUrl, saveSolidDatasetAt, setThing } from "@inrupt/solid-client";
+import { createSolidDataset, createThing, getPodUrlAllFrom, getSolidDataset, getStringNoLocale, getThing, getThingAll, getUrl, saveSolidDatasetAt, setStringNoLocale, setThing } from "@inrupt/solid-client";
 import { login } from "@inrupt/solid-client-authn-browser";
 
 export function loginToPod() {
@@ -74,15 +74,15 @@ export async function initThing(data, struct, options) {
 }
 
 export function setAllAttr(thing, data) {
-    const { struct } = data;
+    const { shape } = data;
     for (let attr in data) {
-        if (!struct[attr]) {
-            console.info(`Skipping assignment. No struct attribute found for ${attr}.`);
+        if (!shape[attr]) {
+            console.info(`Skipping assignment. No shape attribute found for ${attr}.`);
             continue;
         }
-        thing = struct[attr].set(
+        thing = shape[attr].set(
             thing,
-            struct[attr].predicate,
+            shape[attr].predicate,
             data[attr]);
     }
     return thing;

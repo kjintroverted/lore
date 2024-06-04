@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { RATINGS, overallScore } from "../util/util";
+import { overallScore } from "../util/util";
 import { Column, Row } from "./styled";
 import { useState } from "react";
 import RateSlider from "./RateSlider";
 
-const MovieDetails = ({ movie, rank, updateRating }) => {
+const MovieDetails = ({ movie, rank, updateRating, saveMovie }) => {
 
     // Ratings
     // 0: {Source: 'Internet Movie Database', Value: '7.8/10'}
@@ -62,6 +62,7 @@ const MovieDetails = ({ movie, rank, updateRating }) => {
                                     category={'soundtrack'} />
                             </Column>
                         </Row>
+                        <ActionButton onClick={() => saveMovie(movie)}>Save</ActionButton>
                     </Column>
                 </Details>
             }
@@ -117,4 +118,8 @@ const Details = styled.div`
         border-bottom: gray solid;
         max-height: 500px;
     }
+`
+
+const ActionButton = styled.button`
+    align-self: end
 `

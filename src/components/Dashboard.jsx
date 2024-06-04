@@ -1,4 +1,4 @@
-import { getDataSet, initThing, loadDataset } from '../util/pods';
+import { getDataSet, initThing, loadDataset, saveThing, setAllAttr } from '../util/pods';
 import { movieShape } from './../util/shapes'
 import { useEffect, useState } from 'react';
 import MovieTable from './MovieTable';
@@ -37,9 +37,15 @@ const Dashboard = ({ appData }) => {
         setMovieDataset(dataset);
     }
 
+    async function saveMovie(movie) {
+        let updatedThing = setAllAttr(movie.thing, movie);
+        let { dataset } = saveThing(updatedThing, movieDataset, { fetch: appData.fetch })
+        setMovieDataset(dataset);
+    }
+
     return (
         <Column>
-            <MovieTable movies={movies} addMovie={addMovie} />
+            <MovieTable movies={movies} addMovie={addMovie} saveMovie={saveMovie} />
         </Column>
     )
 }
