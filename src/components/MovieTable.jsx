@@ -3,21 +3,14 @@ import MovieDetails from "./MovieDetails";
 import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
+import { sortRating } from "../util/util";
 
 const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
 
     useEffect(() => {
-        setSortedMovies(movies.sort((a, b) => {
-            const imdbA = +a.info.Ratings
-                .find(r => r.Source = 'Internet Movie Database')
-                .Value.split('/')[0];
-            const imdbB = +b.info.Ratings
-                .find(r => r.Source = 'Internet Movie Database')
-                .Value.split('/')[0];
-            return imdbB - imdbA;
-        }));
+        setSortedMovies(movies.sort(sortRating(1)));
     }, [movies]);
 
     function updateRating(i) {

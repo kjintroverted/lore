@@ -39,7 +39,7 @@ const Dashboard = ({ appData }) => {
 
     async function saveMovie(movie) {
         let updatedThing = setAllAttr(movie.thing, movie);
-        let { dataset } = saveThing(updatedThing, movieDataset, { fetch: appData.fetch })
+        let { dataset } = await saveThing(updatedThing, movieDataset, { fetch: appData.fetch })
         setMovieDataset(dataset);
     }
 

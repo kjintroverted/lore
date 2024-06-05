@@ -66,9 +66,9 @@ export function loadFromDataset(dataset, url, struct) {
 }
 
 // opt needed: id, dataset, fetch
-export async function initThing(data, struct, options) {
+export async function initThing(data, shape, options) {
     let thing = createThing({ id: options.id })
-    thing = setAllAttr(thing, { ...data, struct });
+    thing = setAllAttr(thing, { ...data, shape });
     let { dataset: updatedDataset, thing: updatedThing } = await saveThing(thing, options.dataset, options);
     return { dataset: updatedDataset, thing: updatedThing };
 }
@@ -90,15 +90,13 @@ export function setAllAttr(thing, data) {
 
 // opts needed: fetch
 export async function saveThing(thing, dataset, options = {}) {
-    console.log("options", options);
-    dataset = setThing(dataset, thing);
-    dataset = await saveSolidDatasetAt(
-        dataset.internal_resourceInfo.sourceIri,
-        dataset,
+    let updatedDataset = setThing(dataset, thing);
+    updatedDataset = await saveSolidDatasetAt(
+        updatedDataset.internal_resourceInfo.sourceIri,
+        updatedDataset,
         { fetch: options.fetch }
     )
-    // thing = await loadFromDataset(dataset, url, struct);
-    return { dataset, thing };
+    return { dataset: updatedDataset, thing };
 }
 
 export async function loadDataset(dataset, options) {

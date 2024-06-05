@@ -15,7 +15,11 @@ const RateSlider = ({ movie, category, updateRating }) => {
                 </Label>
                 <input
                     style={{ width: 150 }}
-                    defaultValue={5}
+                    defaultValue={
+                        (movie.rating && movie.rating[category]) ?
+                            movie.rating[category]
+                            : 5
+                    }
                     onChange={e => updateRating(+e.target.value)}
                     type="range"
                     min="1" max="10" />
