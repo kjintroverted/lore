@@ -8,10 +8,11 @@ import { sortRating } from "../util/util";
 const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
+    const [sortFactor, setSortFactor] = useState(1);
 
     useEffect(() => {
-        setSortedMovies(movies.sort(sortRating(1)));
-    }, [movies]);
+        setSortedMovies(movies.sort(sortRating(sortFactor)));
+    }, [movies, sortFactor]);
 
     function updateRating(i) {
         return (category) => {
@@ -38,7 +39,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
             <TabelRow>
                 <SingleCol />
                 <LittleText style={{ flex: 1 }}>Title</LittleText>
-                <DoubleCol>
+                <DoubleCol onClick={() => setSortFactor(sortFactor * -1)}>
                     <LittleText>Rating</LittleText>
                 </DoubleCol>
                 <SingleCol>
@@ -95,9 +96,10 @@ const SingleCol = styled.div`
 const DoubleCol = styled.div`
     width: 5em;
     text-align: center;
+    cursor: pointer;
 `
 
 const LittleText = styled.p`
     margin: .0em;
-    font-size: .8em
+    font-size: .8em;
 `
