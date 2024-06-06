@@ -4,7 +4,7 @@ import { Column, Row } from "./styled";
 import { useState } from "react";
 import RateSlider from "./RateSlider";
 
-const MovieDetails = ({ movie, rank, updateRating, saveMovie }) => {
+const MovieDetails = ({ movie, rank, updateRating, saveMovie, sort }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -16,13 +16,19 @@ const MovieDetails = ({ movie, rank, updateRating, saveMovie }) => {
                 </SingleCol>
                 <BigText style={{ flex: 1 }}>{movie.info.Title} ({movie.info.Year})</BigText>
                 <DoubleCol>
-                    <BigText className="glow">{overallScore(movie.rating) || "-"}</BigText>
+                    <BigText className={sort === SOURCES.custom ? "glow" : ""}>
+                        {overallScore(movie.rating) || "-"}
+                    </BigText>
                 </DoubleCol>
                 <SingleCol>
-                    <LittleText>{movie.info.Ratings.find(r => r.Source === SOURCES.imdb).Value}</LittleText>
+                    <LittleText className={sort === SOURCES.imdb ? "glow" : ""}>
+                        {movie.info.Ratings.find(r => r.Source === SOURCES.imdb).Value}
+                    </LittleText>
                 </SingleCol>
                 <SingleCol>
-                    <LittleText>{movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}</LittleText>
+                    <LittleText className={sort === SOURCES.meta ? "glow" : ""}>
+                        {movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}
+                    </LittleText>
                 </SingleCol>
             </TabelRow>
             {
@@ -100,6 +106,9 @@ const BigText = styled.h3`
 
 const LittleText = styled.p`
     margin: .1em;
+    &.glow {
+        text-shadow: white 0px 0px 10px;
+    }
 `
 
 const Details = styled.div`

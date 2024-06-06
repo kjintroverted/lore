@@ -64,7 +64,9 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                     movie={m}
                     rank={i + 1}
                     updateRating={updateRating(i)}
-                    saveMovie={saveMovie} />)
+                    saveMovie={saveMovie}
+                    sort={sortOptions.source}
+                />)
             }
         </Table>
     )
