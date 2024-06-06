@@ -11,11 +11,13 @@ function App() {
   // Start login process
   // Handle login redirect
   useEffect(() => {
+
     handleIncomingRedirect()
       .then(() => {
+        console.log('After redirect');
         let s = getDefaultSession();
         if (s.info && s.info.isLoggedIn) {
-          console.info("Started session:", s.info.webId)
+          console.info("Started session:", s.info.webId);
           setSession(s)
         }
       })

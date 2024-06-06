@@ -49,7 +49,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                 <SingleCol />
                 <LittleText style={{ flex: 1 }}>Title</LittleText>
                 <DoubleCol onClick={() => updateSort(SOURCES.custom)}>
-                    <LittleText>Rating </LittleText>
+                    <LittleText>Rating</LittleText>
                 </DoubleCol>
                 <SingleCol onClick={() => updateSort(SOURCES.imdb)}>
                     <LittleText>IMDB</LittleText>
