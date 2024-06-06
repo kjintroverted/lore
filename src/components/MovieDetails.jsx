@@ -1,15 +1,10 @@
 import styled from "styled-components";
-import { overallScore } from "../util/util";
+import { SOURCES, overallScore } from "../util/util";
 import { Column, Row } from "./styled";
 import { useState } from "react";
 import RateSlider from "./RateSlider";
 
 const MovieDetails = ({ movie, rank, updateRating, saveMovie }) => {
-
-    // Ratings
-    // 0: {Source: 'Internet Movie Database', Value: '7.8/10'}
-    // 1: {Source: 'Rotten Tomatoes', Value: '75%'}
-    // 2: {Source: 'Metacritic', Value: '51/100'}
 
     const [open, setOpen] = useState(false);
 
@@ -24,10 +19,10 @@ const MovieDetails = ({ movie, rank, updateRating, saveMovie }) => {
                     <BigText className="glow">{overallScore(movie.rating) || "-"}</BigText>
                 </DoubleCol>
                 <SingleCol>
-                    <LittleText>{movie.info.Ratings[0].Value}</LittleText>
+                    <LittleText>{movie.info.Ratings.find(r => r.Source === SOURCES.imdb).Value}</LittleText>
                 </SingleCol>
                 <SingleCol>
-                    <LittleText>{movie.info.Ratings[1].Value}</LittleText>
+                    <LittleText>{movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}</LittleText>
                 </SingleCol>
             </TabelRow>
             {

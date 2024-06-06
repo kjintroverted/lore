@@ -17,12 +17,41 @@ export function overallScore(rating, sigDigits = DECIMAL) {
     return Math.round(res * Math.pow(10, sigDigits)) / Math.pow(10, sigDigits);
 }
 
-export const sortRating = (factor) => {
-    return (a, b) => (
-        !overallScore(a.rating) ? 1
-            : !overallScore(b.rating) ? -1
-                : (overallScore(b.rating) - overallScore(a.rating)) * factor
-    )
+export const SOURCES = {
+    custom: 'CUSTOM',
+    imdb: 'Internet Movie Database',
+    meta: 'Metacritic'
+}
+
+export const sortRating = (factor, source) => {
+    switch (source) {
+        case SOURCES.imdb:
+            return (a, b) => {
+                const imdbA = +a.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('/')[0];
+                const imdbB = +b.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('/')[0];
+                return (imdbB - imdbA) * factor;
+            }
+        case SOURCES.meta:
+            return (a, b) => {
+                const imdbA = +a.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('/')[0];
+                const imdbB = +b.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('/')[0];
+                return (imdbB - imdbA) * factor;
+            }
+        default:
+            return (a, b) => (
+                !overallScore(a.rating) ? 1
+                    : !overallScore(b.rating) ? -1
+                        : (overallScore(b.rating) - overallScore(a.rating)) * factor
+            )
+    }
 }
 
 export const sortExternalRating = (field) => (factor) => {

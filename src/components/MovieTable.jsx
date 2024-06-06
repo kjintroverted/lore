@@ -3,16 +3,17 @@ import MovieDetails from "./MovieDetails";
 import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
-import { sortRating } from "../util/util";
+import { SOURCES, sortRating } from "../util/util";
 
 const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
-    const [sortFactor, setSortFactor] = useState(1);
+    const [sortOptions, setSortOptions] = useState({ factor: 1, source: SOURCES.custom });
 
     useEffect(() => {
-        setSortedMovies(movies.sort(sortRating(sortFactor)));
-    }, [movies, sortFactor]);
+        let reSortList = [...movies].sort(sortRating(sortOptions.factor, sortOptions.source));
+        setSortedMovies(reSortList);
+    }, [movies, sortOptions]);
 
     function updateRating(i) {
         return (category) => {
@@ -30,6 +31,14 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
         }
     }
 
+    function updateSort(source) {
+        if (source === sortOptions.source) {
+            setSortOptions({ factor: sortOptions.factor * -1, source })
+        } else {
+            setSortOptions({ ...sortOptions, source })
+        }
+    }
+
     return (
         <Table>
             <Header>
@@ -39,13 +48,13 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
             <TabelRow>
                 <SingleCol />
                 <LittleText style={{ flex: 1 }}>Title</LittleText>
-                <DoubleCol onClick={() => setSortFactor(sortFactor * -1)}>
-                    <LittleText>Rating</LittleText>
+                <DoubleCol onClick={() => updateSort(SOURCES.custom)}>
+                    <LittleText>Rating </LittleText>
                 </DoubleCol>
-                <SingleCol>
+                <SingleCol onClick={() => updateSort(SOURCES.imdb)}>
                     <LittleText>IMDB</LittleText>
                 </SingleCol>
-                <SingleCol>
+                <SingleCol onClick={() => updateSort(SOURCES.meta)}>
                     <LittleText>Meta</LittleText>
                 </SingleCol>
             </TabelRow>
@@ -91,6 +100,7 @@ const TabelRow = styled.div`
 const SingleCol = styled.div`
     width: 3.5em;
     text-align: center;
+    cursor: pointer;
 `
 
 const DoubleCol = styled.div`
