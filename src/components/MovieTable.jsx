@@ -51,12 +51,17 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                 <DoubleCol onClick={() => updateSort(SOURCES.custom)}>
                     <LittleText>Rating</LittleText>
                 </DoubleCol>
-                <SingleCol onClick={() => updateSort(SOURCES.imdb)}>
-                    <LittleText>IMDB</LittleText>
-                </SingleCol>
-                <SingleCol onClick={() => updateSort(SOURCES.meta)}>
-                    <LittleText>Meta</LittleText>
-                </SingleCol>
+                {
+                    window.innerWidth > 700 &&
+                    <>
+                        <SingleCol onClick={() => updateSort(SOURCES.imdb)}>
+                            <LittleText>IMDB</LittleText>
+                        </SingleCol>
+                        <SingleCol onClick={() => updateSort(SOURCES.meta)}>
+                            <LittleText>Meta</LittleText>
+                        </SingleCol>
+                    </>
+                }
             </TabelRow>
             {
                 sortedMovies.map((m, i) => <MovieDetails
