@@ -34,7 +34,7 @@ function App() {
   return (
     <>
       <Header>
-        Movies
+        <img src='./assets/logo_sm.png' />
         <Spacer />
         {
           profile ?
