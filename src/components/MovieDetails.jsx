@@ -20,16 +20,21 @@ const MovieDetails = ({ movie, rank, updateRating, saveMovie, sort }) => {
                         {overallScore(movie.rating) || "-"}
                     </BigText>
                 </DoubleCol>
-                <SingleCol>
-                    <LittleText className={sort === SOURCES.imdb ? "glow" : ""}>
-                        {movie.info.Ratings.find(r => r.Source === SOURCES.imdb).Value}
-                    </LittleText>
-                </SingleCol>
-                <SingleCol>
-                    <LittleText className={sort === SOURCES.meta ? "glow" : ""}>
-                        {movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}
-                    </LittleText>
-                </SingleCol>
+                {
+                    window.innerWidth > 700 &&
+                    <>
+                        <SingleCol>
+                            <LittleText className={sort === SOURCES.imdb ? "glow" : ""}>
+                                {movie.info.Ratings.find(r => r.Source === SOURCES.imdb).Value}
+                            </LittleText>
+                        </SingleCol>
+                        <SingleCol>
+                            <LittleText className={sort === SOURCES.meta ? "glow" : ""}>
+                                {movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}
+                            </LittleText>
+                        </SingleCol>
+                    </>
+                }
             </TabelRow>
             {
                 movie.info &&
