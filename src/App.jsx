@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Header, Main, Spacer } from './components/styled'
 import { getDefaultSession, handleIncomingRedirect } from '@inrupt/solid-client-authn-browser'
 import { getProfile, loginToPod } from './util/pods'
+import logo from './assets/logo_sm.png'
 import Dashboard from './components/Dashboard'
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
   return (
     <>
       <Header>
-        <img src='./assets/logo_sm.png' />
+        <img src={logo} />
         <Spacer />
         {
           profile ?
