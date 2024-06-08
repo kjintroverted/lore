@@ -18,7 +18,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
     function updateRating(i) {
         return (category) => {
             return (value) => {
-                let updated = movies[i]
+                let updated = sortedMovies[i]
                 if (!updated.rating) updated.rating = {}
                 updated.rating[category] = +value;
                 setSortedMovies(
