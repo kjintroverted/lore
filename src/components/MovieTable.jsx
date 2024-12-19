@@ -20,7 +20,6 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
             return (value) => {
                 let updated = sortedMovies[i]
                 if (!updated.rating) updated.rating = {}
-                debugger
                 updated.rating[category] = +value;
                 setSortedMovies(
                     [...sortedMovies.slice(0, i),
