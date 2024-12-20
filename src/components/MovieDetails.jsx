@@ -29,8 +29,8 @@ const MovieDetails = ({ movie, rank, updateRating, saveMovie, sort }) => {
                             </LittleText>
                         </SingleCol>
                         <SingleCol>
-                            <LittleText className={sort === SOURCES.meta ? "glow" : ""}>
-                                {movie.info.Ratings.find(r => r.Source === SOURCES.meta).Value}
+                            <LittleText className={sort === SOURCES.tom ? "glow" : ""}>
+                                {movie.info.Ratings.find(r => r.Source === SOURCES.tom) ? movie.info.Ratings.find(r => r.Source === SOURCES.tom).Value : '-'}
                             </LittleText>
                         </SingleCol>
                     </>
