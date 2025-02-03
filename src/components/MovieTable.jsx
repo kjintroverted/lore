@@ -16,9 +16,10 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
     }, [movies, sortOptions]);
 
     function updateTags(i) {
-        return (tagArr) => {
+        return async (tagArr) => {
             let updated = sortedMovies[i]
             updated.tags = tagArr;
+            saveMovie(updated)
             setSortedMovies(
                 [...sortedMovies.slice(0, i),
                     updated,
