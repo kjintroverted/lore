@@ -13,10 +13,18 @@ const Tags = ({ movie }) => {
         }
     }
 
+    const removeTag = (index) => (e) => {
+        e.stopPropagation()
+        updateTags([...tags.slice(0, index), ...tags.slice(index + 1)])
+    }
+
     return (
         <Row>
             {
-                tags.map((tag, index) => <Chip key={`tag-${index}`}>{tag}</Chip>)
+                tags.map((tag, index) => <Chip key={`tag-${index}`}>
+                    <Remove onClick={removeTag(index)}>X</Remove>
+                    {tag}
+                </Chip>)
             }
             <TagInput
                 onClick={(e) => e.stopPropagation()}
@@ -33,10 +41,20 @@ let TagInput = styled.input`
     margin: .1em;
 `
 
-let Chip = styled.p`
-    background: darkred;
+let Chip = styled.div`
+    display: flex;
+    background: white;
+    color: gray;
     border-radius: 10px;
     padding: 0em .5em;
     margin: .1em .2em;
     font-size: small;
+    font-weight: bold;
+`
+
+let Remove = styled.div`
+    color: red;
+    padding: 0em .4em;
+    margin-left: -.4em;
+    cursor: pointer;
 `
