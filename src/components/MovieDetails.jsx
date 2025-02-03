@@ -3,6 +3,7 @@ import { SOURCES, overallScore } from "../util/util";
 import { Column, Row } from "./styled";
 import { useState } from "react";
 import RateSlider from "./RateSlider";
+import Tags from "./Tags";
 
 const MovieDetails = ({ movie, rank, updateRating, saveMovie, sort }) => {
 
@@ -14,7 +15,10 @@ const MovieDetails = ({ movie, rank, updateRating, saveMovie, sort }) => {
                 <SingleCol>
                     {rank}
                 </SingleCol>
-                <BigText style={{ flex: 1 }}>{movie.info.Title} ({movie.info.Year})</BigText>
+                <Column style={{ flex: 1 }}>
+                    <BigText >{movie.info.Title} ({movie.info.Year})</BigText>
+                    <Tags />
+                </Column>
                 <DoubleCol>
                     <BigText className={sort === SOURCES.custom ? "glow" : ""}>
                         {overallScore(movie.rating) || "-"}
