@@ -13,9 +13,11 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
     const [filters, setFilters] = useState([]);
 
     useEffect(() => {
-        let reSortList = [...movies].sort(sortRating(sortOptions.factor, sortOptions.source));
+        let reSortList = [...movies]
+            .filter((movie) => movie.tags && filters.every(f => movie.tags.includes(f)))
+            .sort(sortRating(sortOptions.factor, sortOptions.source))
         setSortedMovies(reSortList);
-    }, [movies, sortOptions]);
+    }, [movies, sortOptions, filters]);
 
     function addFilter(filterText) {
         if (!filters.includes(filterText)) setFilters([...filters, filterText])
