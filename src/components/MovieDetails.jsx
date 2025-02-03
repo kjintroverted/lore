@@ -5,7 +5,7 @@ import { useState } from "react";
 import RateSlider from "./RateSlider";
 import Tags from "./Tags";
 
-const MovieDetails = ({ movie, rank, updateTags, updateRating, saveMovie, sort }) => {
+const MovieDetails = ({ movie, rank, updateTags, updateRating, saveMovie, sort, filter }) => {
 
     const [open, setOpen] = useState(false);
 
@@ -17,7 +17,7 @@ const MovieDetails = ({ movie, rank, updateTags, updateRating, saveMovie, sort }
                 </SingleCol>
                 <Column style={{ flex: 1 }}>
                     <BigText >{movie.info.Title} ({movie.info.Year})</BigText>
-                    <Tags tags={movie.tags || []} updateTags={updateTags} />
+                    <Tags tags={movie.tags || []} updateTags={updateTags} tagClick={filter} />
                 </Column>
                 <DoubleCol>
                     <BigText className={sort === SOURCES.custom ? "glow" : ""}>

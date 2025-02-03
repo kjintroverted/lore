@@ -4,16 +4,22 @@ import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 import { SOURCES, sortRating } from "../util/util";
+import Tags from "./Tags";
 
 const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
     const [sortOptions, setSortOptions] = useState({ factor: 1, source: SOURCES.custom });
+    const [filters, setFilters] = useState([]);
 
     useEffect(() => {
         let reSortList = [...movies].sort(sortRating(sortOptions.factor, sortOptions.source));
         setSortedMovies(reSortList);
     }, [movies, sortOptions]);
+
+    function addFilter(filterText) {
+        if (!filters.includes(filterText)) setFilters([...filters, filterText])
+    }
 
     function updateTags(i) {
         return async (tagArr) => {
@@ -56,6 +62,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
     return (
         <Table>
             <Header>
+                <Tags enabled={false} tags={filters} updateTags={setFilters} />
                 <Spacer />
                 <Search select={addMovie} />
             </Header>
@@ -87,6 +94,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                         updateRating={updateRating(i)}
                         saveMovie={saveMovie}
                         sort={sortOptions.source}
+                        filter={addFilter}
                     />)
             }
         </Table>
