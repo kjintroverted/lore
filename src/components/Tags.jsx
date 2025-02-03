@@ -1,10 +1,7 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Row } from "./styled";
 
-const Tags = ({ movie }) => {
-
-    const [tags, updateTags] = useState(movie && movie.tags ? movie.tags : [])
+const Tags = ({ tags = [], updateTags }) => {
 
     const handleOnKey = (e) => {
         if (e.key === 'Enter') {

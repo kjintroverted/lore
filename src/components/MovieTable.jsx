@@ -15,6 +15,19 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
         setSortedMovies(reSortList);
     }, [movies, sortOptions]);
 
+    function updateTags(i) {
+        return (tagArr) => {
+            let updated = sortedMovies[i]
+            updated.tags = tagArr;
+            setSortedMovies(
+                [...sortedMovies.slice(0, i),
+                    updated,
+                ...sortedMovies.slice(i + 1)
+                ]
+            )
+        }
+    }
+
     function updateRating(i) {
         return (category) => {
             return (value) => {
@@ -64,14 +77,16 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                 }
             </TabelRow>
             {
-                sortedMovies.map((m, i) => <MovieDetails
-                    key={m.id}
-                    movie={m}
-                    rank={i + 1}
-                    updateRating={updateRating(i)}
-                    saveMovie={saveMovie}
-                    sort={sortOptions.source}
-                />)
+                sortedMovies.map((m, i) =>
+                    <MovieDetails
+                        key={m.id}
+                        movie={m}
+                        rank={i + 1}
+                        updateTags={updateTags(i)}
+                        updateRating={updateRating(i)}
+                        saveMovie={saveMovie}
+                        sort={sortOptions.source}
+                    />)
             }
         </Table>
     )
