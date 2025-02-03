@@ -4,16 +4,38 @@ import { Spacer } from "./styled";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 import { SOURCES, sortRating } from "../util/util";
+import Tags from "./Tags";
 
 const MovieTable = ({ movies, addMovie, saveMovie }) => {
 
     const [sortedMovies, setSortedMovies] = useState(movies);
     const [sortOptions, setSortOptions] = useState({ factor: 1, source: SOURCES.custom });
+    const [filters, setFilters] = useState([]);
 
     useEffect(() => {
-        let reSortList = [...movies].sort(sortRating(sortOptions.factor, sortOptions.source));
+        let reSortList = [...movies]
+            .filter((movie) => movie.tags && filters.every(f => movie.tags.includes(f)))
+            .sort(sortRating(sortOptions.factor, sortOptions.source))
         setSortedMovies(reSortList);
-    }, [movies, sortOptions]);
+    }, [movies, sortOptions, filters]);
+
+    function addFilter(filterText) {
+        if (!filters.includes(filterText)) setFilters([...filters, filterText])
+    }
+
+    function updateTags(i) {
+        return async (tagArr) => {
+            let updated = sortedMovies[i]
+            updated.tags = tagArr;
+            saveMovie(updated)
+            setSortedMovies(
+                [...sortedMovies.slice(0, i),
+                    updated,
+                ...sortedMovies.slice(i + 1)
+                ]
+            )
+        }
+    }
 
     function updateRating(i) {
         return (category) => {
@@ -42,6 +64,7 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
     return (
         <Table>
             <Header>
+                <Tags enabled={false} tags={filters} updateTags={setFilters} />
                 <Spacer />
                 <Search select={addMovie} />
             </Header>
@@ -57,21 +80,24 @@ const MovieTable = ({ movies, addMovie, saveMovie }) => {
                         <SingleCol onClick={() => updateSort(SOURCES.imdb)}>
                             <LittleText>IMDB</LittleText>
                         </SingleCol>
-                        <SingleCol onClick={() => updateSort(SOURCES.meta)}>
-                            <LittleText>Meta</LittleText>
+                        <SingleCol onClick={() => updateSort(SOURCES.tom)}>
+                            <LittleText>RT</LittleText>
                         </SingleCol>
                     </>
                 }
             </TabelRow>
             {
-                sortedMovies.map((m, i) => <MovieDetails
-                    key={m.id}
-                    movie={m}
-                    rank={i + 1}
-                    updateRating={updateRating(i)}
-                    saveMovie={saveMovie}
-                    sort={sortOptions.source}
-                />)
+                sortedMovies.map((m, i) =>
+                    <MovieDetails
+                        key={m.id}
+                        movie={m}
+                        rank={i + 1}
+                        updateTags={updateTags(i)}
+                        updateRating={updateRating(i)}
+                        saveMovie={saveMovie}
+                        sort={sortOptions.source}
+                        filter={addFilter}
+                    />)
             }
         </Table>
     )

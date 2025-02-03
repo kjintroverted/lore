@@ -20,7 +20,8 @@ export function overallScore(rating, sigDigits = DECIMAL) {
 export const SOURCES = {
     custom: 'CUSTOM',
     imdb: 'Internet Movie Database',
-    meta: 'Metacritic'
+    meta: 'Metacritic',
+    tom: 'Rotten Tomatoes'
 }
 
 export const sortRating = (factor, source) => {
@@ -43,6 +44,16 @@ export const sortRating = (factor, source) => {
                 const imdbB = +b.info.Ratings
                     .find(r => r.Source === source)
                     .Value.split('/')[0];
+                return (imdbB - imdbA) * factor;
+            }
+        case SOURCES.tom:
+            return (a, b) => {
+                const imdbA = +a.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('%')[0];
+                const imdbB = +b.info.Ratings
+                    .find(r => r.Source === source)
+                    .Value.split('%')[0];
                 return (imdbB - imdbA) * factor;
             }
         default:
