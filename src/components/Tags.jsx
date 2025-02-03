@@ -29,7 +29,7 @@ const Tags = ({ movie }) => {
             <TagInput
                 onClick={(e) => e.stopPropagation()}
                 onKeyUp={handleOnKey}
-                placeholder="add tag..."
+                placeholder={`${tags.length ? 'add' : 'no'} tags...`}
             />
         </Row>
     )
@@ -39,12 +39,18 @@ export default Tags;
 
 let TagInput = styled.input`
     margin: .1em;
+    flex: 1;
+    border: none;
+    background: none;
+    &:focus-visible {
+        outline: none;
+    }
 `
 
 let Chip = styled.div`
     display: flex;
-    background: white;
-    color: gray;
+    background: lightgray;
+    color: #242424;
     border-radius: 10px;
     padding: 0em .5em;
     margin: .1em .2em;
